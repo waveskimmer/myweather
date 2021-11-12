@@ -1,0 +1,10 @@
+
+**/*.swp
+**/~*
+
+.idea
+**/*.iml
+target 
+.bsp
+
+project
