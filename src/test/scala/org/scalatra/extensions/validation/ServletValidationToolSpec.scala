@@ -19,7 +19,7 @@ class ServletValidationToolSpec extends AnyFunSuite with ServletValidationTool w
     when(request.getHeader(any)).thenReturn(null)
 
     validate[HttpServletRequest](request, checkAuthorization) match {
-      case Failure(ValidationFailure(Seq(ValidationError(AUTHORIZATION_HEADER_MISSING, _)))) =>
+      case Failure(ValidationFailure(Seq(ValidationError(HEADER_PARAMETER_MISSING, _)))) =>
       case wrong => fail(s"Unexpected: $wrong")
     }
   }
@@ -29,7 +29,7 @@ class ServletValidationToolSpec extends AnyFunSuite with ServletValidationTool w
     when(request.getHeader(any)).thenReturn("howdy duty")
 
     validate[HttpServletRequest](request, checkAuthorization) match {
-      case Failure(ValidationFailure(Seq(ValidationError(AUTHORIZATION_HEADER_MALFORMED, _)))) =>
+      case Failure(ValidationFailure(Seq(ValidationError(HEADER_PARAMETER_MALFORMED, _)))) =>
       case wrong => fail(s"Unexpected: $wrong")
     }
   }

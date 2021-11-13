@@ -8,16 +8,20 @@ import scala.util.matching.Regex
 trait ValidationRegex {
   val authorizationRegex: Regex = raw"Bearer\s.*".r
   val applicationJsonRegex: Regex = "application/json".r
+  val notEmptyRegex: Regex = raw".+".r
 }
 
 
 trait ServletValidationTool extends ScalatraBase with ValidationTool with HttpHeaders with ValidationRegex with ErrorCodes {
 
-  def checkAuthorization(request: HttpServletRequest): ValidationResult =
-    Option(request.getHeader(authorization)) match {
-      case Some(authorizationRegex(_*)) => Validated
-      case Some(value) => ValidationError(AUTHORIZATION_HEADER_MALFORMED, s"Header parameter '$authorization' malformed: $value")
-      case None => ValidationError(AUTHORIZATION_HEADER_MISSING, s"Missing header parameter '$authorization'")
+  def checkHeaderParam(param: String, regex: Regex = notEmptyRegex)(request: HttpServletRequest): ValidationResult =
+    Option(request.getHeader(param)) match {
+      case Some(regex(_*)) => Validated
+      case Some(value) => ValidationError(HEADER_PARAMETER_MALFORMED, s"Header parameter '$param' malformed: $value")
+      case None => ValidationError(HEADER_PARAMETER_MISSING, s"Header parameter '$param' missing")
     }
+
+  def checkAuthorization(request: HttpServletRequest): ValidationResult =
+    checkHeaderParam(authorization, authorizationRegex)(request)
 
 }
