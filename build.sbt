@@ -5,7 +5,8 @@ ThisBuild / organization := "org.myweather"
 
 scalacOptions ++= Seq("-deprecation", "-feature")
 
-lazy val hello = (project in file("."))
+lazy val myweather = (project in file("."))
+  .enablePlugins(JettyPlugin)
   .settings(
     name := "MyWeather",
     version := "0.1.0-SNAPSHOT",
@@ -22,4 +23,3 @@ lazy val hello = (project in file("."))
     ),
   )
 
-enablePlugins(JettyPlugin)
