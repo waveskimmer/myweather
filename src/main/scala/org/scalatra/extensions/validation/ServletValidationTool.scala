@@ -21,6 +21,8 @@ trait ServletValidationTool extends ScalatraBase with ValidationTool with HttpHe
       case None => ValidationError(HEADER_PARAMETER_MISSING, s"Header parameter '$param' missing")
     }
 
+  //  def checkPathParam(param: String, regex: Regex = notEmptyRegex)
+
   def checkAuthorization(request: HttpServletRequest): ValidationResult =
     checkHeaderParam(authorization, authorizationRegex)(request)
 

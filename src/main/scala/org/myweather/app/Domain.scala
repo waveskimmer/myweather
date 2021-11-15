@@ -2,7 +2,7 @@ package org.myweather.app
 
 import spray.json.{DefaultJsonProtocol, RootJsonFormat}
 
-trait Domain extends DefaultJsonProtocol {
+object Domain extends DefaultJsonProtocol {
 
   case class Wind(avg: Int,
                   max: Int,
@@ -19,6 +19,8 @@ trait Domain extends DefaultJsonProtocol {
   implicit val reportFormat: RootJsonFormat[Report] = jsonFormat5(Report)
 
 }
+
+
 
 
 
